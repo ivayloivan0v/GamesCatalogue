@@ -9,16 +9,11 @@ export const FeaturedGamesScreen = ({ navigation }) => {
   useEffect(() => {}, [data]);
 
   const renderCategoryItem = ({ item }) => {
-    const pressedHandler = () => {
-      navigation.navigate("FeaturedGames", {
-        categoryId: item.id,
-      });
-    };
     return (
       <CategoryGridTile
         title={item.name}
         thumbnail={item.img_square}
-        onPress={pressedHandler}
+        image={item.img}
       />
     );
   };
