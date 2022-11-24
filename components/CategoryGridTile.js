@@ -8,6 +8,8 @@ import {
   ImageBackground,
   Modal,
   Animated,
+  Dimensions,
+  Image,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -37,7 +39,17 @@ const Popup = ({ visible, children }) => {
   };
 
   return (
-    <Modal transparent visible={showPopup}>
+    <Modal
+      transparent
+      visible={showPopup}
+      supportedOrientations={[
+        "portrait",
+        "portrait-upside-down",
+        "landscape",
+        "landscape-left",
+        "landscape-right",
+      ]}
+    >
       <View style={styles.popupBackground}>
         <Animated.View
           style={[
@@ -61,7 +73,11 @@ export const CategoryGridTile = ({ title, thumbnail }) => {
         <View style={styles.popupView}>
           <View style={styles.popupHeader}>
             <Pressable onPress={() => setVisible(false)}>
-              <AntDesign name="closecircleo" size={24} color="white" />
+              <AntDesign
+                name="closecircleo"
+                size={deviceWidth < 450 ? 24 : 48}
+                color="white"
+              />
             </Pressable>
           </View>
           <ImageBackground
@@ -81,7 +97,7 @@ export const CategoryGridTile = ({ title, thumbnail }) => {
         <View style={styles.innerContainer}>
           <Text style={styles.title}>{title}</Text>
         </View>
-        <ImageBackground
+        <Image
           source={{ uri: thumbnail }}
           resizeMode="cover"
           style={styles.image}
@@ -91,15 +107,17 @@ export const CategoryGridTile = ({ title, thumbnail }) => {
   );
 };
 
+const deviceWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   gridItem: {
     flex: 1,
     margin: 16,
-    height: 100,
+    height: deviceWidth < 450 ? 100 : 255,
     borderRadius: 8,
     elevation: 4,
-    backgroundColor: "white",
-    shadowColor: "black",
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#000000",
     shadowOpacity: 0.25,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
@@ -114,11 +132,10 @@ const styles = StyleSheet.create({
   innerContainer: {
     paddingLeft: 8,
     borderRadius: 8,
-    justifyContent: "center",
     alignItems: "flex-start",
   },
   title: {
-    fontSize: 8,
+    fontSize: deviceWidth < 450 ? 8 : 16,
     fontWeight: "bold",
   },
   image: {
@@ -132,9 +149,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   popupContainer: {
-    width: "90%",
-    height: "80%",
-    // backgroundColor: "white",
+    width: "100%",
+    height: "100%",
     padding: 8,
     borderRadius: 10,
   },
@@ -147,10 +163,11 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "flex-end",
     justifyContent: "center",
+    paddingHorizontal: 20
   },
   popupImage: {
-    width: 200,
-    height: 200,
+    width: deviceWidth < 450 ? 200 : 545,
+    height: deviceWidth < 450 ? 200 : 255,
     marginVertical: 10,
     alignItems: "center",
     justifyContent: "center",

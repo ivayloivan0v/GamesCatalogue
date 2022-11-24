@@ -4,7 +4,7 @@ import { CategoryGridTile } from "../components/CategoryGridTile";
 import { GameCategoriesContext } from "../services/Games/gameCategories.context";
 import { Loading } from "../components/Loading";
 
-export const FeaturedGamesScreen = ({ navigation }) => {
+export const LiveCasinoGamesScreen = ({ navigation }) => {
   const { liveCasino, isLoading } = useContext(GameCategoriesContext);
 
   const renderCategoryItem = ({ item }) => {

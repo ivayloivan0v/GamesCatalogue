@@ -1,12 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { FlatList } from "react-native";
 import { CategoryGridTile } from "../components/CategoryGridTile";
-import { ApiContext } from "../context/ApiContext";
+import { GameCategoriesContext } from "../services/Games/gameCategories.context";
+import { Loading } from "../components/Loading";
 
 export const SlotsGamesScreen = ({ navigation }) => {
-  const { data } = useContext(ApiContext);
-
-  useEffect(() => {}, [data]);
+  const { slots, isLoading } = useContext(GameCategoriesContext);
 
   const renderCategoryItem = ({ item }) => {
     return (
@@ -18,11 +17,14 @@ export const SlotsGamesScreen = ({ navigation }) => {
     );
   };
   return (
-    <FlatList
-      data={data}
-      keyExtractor={(item) => item.id}
-      renderItem={renderCategoryItem}
-      numColumns={3}
-    />
+    <>
+      {isLoading && <Loading />}
+      <FlatList
+        data={slots}
+        keyExtractor={(item) => item.id}
+        renderItem={renderCategoryItem}
+        numColumns={3}
+      />
+    </>
   );
 };

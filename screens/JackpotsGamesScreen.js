@@ -4,8 +4,8 @@ import { CategoryGridTile } from "../components/CategoryGridTile";
 import { GameCategoriesContext } from "../services/Games/gameCategories.context";
 import { Loading } from "../components/Loading";
 
-export const FeaturedGamesScreen = ({ navigation }) => {
-  const { liveCasino, isLoading } = useContext(GameCategoriesContext);
+export const JackpotsGamesScreen = ({ navigation }) => {
+  const { jackpots, isLoading } = useContext(GameCategoriesContext);
 
   const renderCategoryItem = ({ item }) => {
     return (
@@ -20,7 +20,7 @@ export const FeaturedGamesScreen = ({ navigation }) => {
     <>
       {isLoading && <Loading />}
       <FlatList
-        data={liveCasino}
+        data={jackpots}
         keyExtractor={(item) => item.id}
         renderItem={renderCategoryItem}
         numColumns={3}
