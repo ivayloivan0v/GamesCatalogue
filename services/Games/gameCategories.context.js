@@ -8,6 +8,7 @@ export const GameCategoriesContextProvider = ({ children }) => {
   const [slots, setSlots] = useState([])
   const [jackpots, setJackpots] = useState([])
   const [liveCasino, setLiveCasino] = useState([])
+  const [featured, setFeatured] = useState([])
 
   const retrieveGameCategories = () => {
     setIsLoading(true);
@@ -17,10 +18,14 @@ export const GameCategoriesContextProvider = ({ children }) => {
         setJackpots(results[1]["games"])
         setSlots(results[2]["games"])
         setLiveCasino(results[0]["games"])
+        const games = results.map((result) => result.games[0].filter((game) => game.is_featured == true));
+        const featuredGames = games[0].filter((game) => game.is_featured == true);
+        setFeatured(featuredGames)
+
       })
       .catch((err) => {
         setIsLoading(false);
-        setError(err);
+        console.log(err)
       });
   };
 
@@ -29,7 +34,7 @@ export const GameCategoriesContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <GameCategoriesContext.Provider value={{slots, jackpots, liveCasino, isLoading}}>
+    <GameCategoriesContext.Provider value={{slots, jackpots, liveCasino, featured, isLoading}}>
       {children}
     </GameCategoriesContext.Provider>
   );
